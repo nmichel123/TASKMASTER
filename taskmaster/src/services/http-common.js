@@ -2,7 +2,7 @@ import http from '../http-common'
 
 class TaskmasterDataService {
     getAll() {
-
+        return http.get('tasks')
     }
 
     get(id) {
