@@ -17,6 +17,11 @@ app.get('/', (req, res) => {
     res.json({ message: 'Hello TaskMaster!'})
 });
 
+//Links sequelize to MySQL database
+const db = require('./src/models')
+db.sequelize.sync()
+
+
 // Add routes requirement here 
 
 //Port
