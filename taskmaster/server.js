@@ -22,7 +22,8 @@ const db = require('./src/models')
 db.sequelize.sync()
 
 
-// Add routes requirement here 
+// Routes
+require('./src/routes/task.routes')(app);
 
 //Port
 const PORT = process.env.PORT || 8080;
