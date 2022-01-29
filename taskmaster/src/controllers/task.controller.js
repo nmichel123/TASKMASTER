@@ -100,15 +100,59 @@ exports.update = (req, res) => {
 
 // Delete a Task by the specified ID in the request
 exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    Task.destroy({
+        where: { id: id }
+    })
+    .then(num => {
+        if (num === 1) {
+            res.send({
+                message: 'Task deleted!'
+            });
+        } else {
+            res.send({
+                message: `Cannot delete Task # ${id}. Task not found!`
+            });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: 'Could not delete Task #' + id
+        })
+    });
 
 };
 
 // Delete all Tasks from the database
 exports.deleteAll = (req, res) => {
+    Task.destroy({
+        where: {},
+        truncate: false
+    })
+    .then(nums => {
+        res.send({ message: `${nums} Tasks deleted!`});
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+                err.message || 'Error occurred while deleting Tasks'
+        })
+    })
 
 };
 
 // Find all published Tasks 
 exports.findAllPublished = (req, res) => {
+    Task.findAll({ where: { published: true } })
+    .then(data => {
+        res.send(data)
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+                err.message || 'Some error occurred while retrieving tutorials'
+        });
+    });
 
 };
